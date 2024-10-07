@@ -1,0 +1,6 @@
+*.pyc
+*.pyo
+__pycache__/
+*.ipynb
+id_rsa
+id_rsa.pub
