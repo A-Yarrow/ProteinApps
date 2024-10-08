@@ -32,6 +32,7 @@ sed -i '43i \  numpy==1.26.4 \\' $HOME/RFdiffusion/docker/Dockerfile
 
 #Docker Build
 #Make sure you are in $HOME/RFdiffusion when you run the docker build command
+cd $HOME/RFdiffusion
 docker build -f $HOME/RFdiffusion/docker/Dockerfile -t rfdiffusion .
 
 mkdir $HOME/inputs $HOME/outputs $HOME/models
