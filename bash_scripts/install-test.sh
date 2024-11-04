@@ -1,7 +1,6 @@
 #!/bin/bash
 set -x
 
-
 #Clone the RFdiffusion git repository
 git clone git@github.com:RosettaCommons/RFdiffusion.git $HOME/RFdiffusion
 
@@ -52,5 +51,21 @@ docker run -it --rm --gpus all \
   inference.num_designs=3 \
   'contigmap.contigs=[10-40/A163-181/10-40]'
 
-#Should see new models in $HOME/outputs/motifscaffolding
+cd $HOME
+echo "You Should see new models in $HOME/outputs/motifscaffolding"
 
+#Install ProteinMPNN
+#https://github.com/dauparas/ProteinMPNN
+#ProteinMPNN Paper: https://www.biorxiv.org/content/10.1101/2022.06.03.494563v1
+
+#Clone the ProteinMPNN git repo
+git clone git@github.com:dauparas/ProteinMPNN.git
+
+#Create a python environment for ProteinMPNN
+conda create -n mlfold python=3.9
+conda activate mlfold
+conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
+
+#Run test and exit if MPNN returns non zero
+chmod 775 /root/ProteinMPNN/examples/*.sh
+./root/ProteinMPNN/examples/submit_example_1.sh || { echo "MPNN encountered some errors, exiting"; exit 1; }

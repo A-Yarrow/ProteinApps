@@ -4,3 +4,10 @@ __pycache__/
 *.ipynb
 id_rsa
 id_rsa.pub
+supplemental
+spr
+*.doc
+*.png
+*.pse
+*.trb
+*.traj.pdb
