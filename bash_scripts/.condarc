@@ -1,0 +1,3 @@
+channels: 
+- https://conda.rosettacommons.org
+- defaults

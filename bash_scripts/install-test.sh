@@ -4,7 +4,7 @@ set -x
 #Clone the RFdiffusion git repository
 git clone git@github.com:RosettaCommons/RFdiffusion.git $HOME/RFdiffusion
 
-Check if the RFdiffusion directory exists
+#Check if the RFdiffusion directory exists
 if [ -d $HOME/RFdiffusion ]; then
     echo "RFdiffusion directory exists"
     cd RFdiffusion
@@ -60,6 +60,10 @@ echo "You Should see new models in $HOME/outputs/motifscaffolding"
 
 #Clone the ProteinMPNN git repo
 git clone git@github.com:dauparas/ProteinMPNN.git
+
+#Set Environment Variables for ProteinMPNN
+export pmpnn="${HOME}/ProteinMPNN/"
+export PATH="${HOME}/ProteinMPNN/:$PATH"
 
 #Create a python environment for ProteinMPNN
 conda create -n mlfold python=3.9
