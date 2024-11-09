@@ -1,0 +1,28 @@
+rule run_silent:
+    output: "{prefix}_silent.silent"
+    input: "{prefix}_pdb"
+    shell: "silentfrompdbs {input}/*.pdb > {output}"
+
+rule run_mpnn:
+    output: "{prefix}_mpnn.silent"
+    input: "{prefix}_silent.silent"
+    shell:
+        """
+        source $HOME/anaconda/etc/profile.d/conda.sh
+        conda activate proteinmpnn_binder_design
+        dl_interface_design.py -silent {input} -outsilent {output}
+        """
+rule run_af2:
+    output: "{prefix}_af2.silent"
+    input: "{prefix}_mpnn.silent"
+    shell:
+        """
+        conda activate af2_binder_design
+        shell("predict.py -silent {input} -outsilent {output}
+        """
+
+rule convert2pdb:
+    output: "prefix_{name}_af2pred.pdb"
+    input: "{prefix}_af2.silent"
+    output: "prefix_af2.pdb"
+    shell: "silentextract {input} > {output}"
