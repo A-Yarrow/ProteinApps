@@ -1,0 +1,31 @@
+Full Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/snakemake/io.py", line 1176, in expand
+    return [
+  File "/usr/lib/python3/dist-packages/snakemake/io.py", line 1177, in <listcomp>
+    formatter.vformat(filepattern, (), comb)
+  File "/usr/lib/python3.10/string.py", line 165, in vformat
+    result, _ = self._vformat(format_string, args, kwargs, used_args, 2)
+  File "/usr/lib/python3.10/string.py", line 205, in _vformat
+    obj, arg_used = self.get_field(field_name, args, kwargs)
+  File "/usr/lib/python3.10/string.py", line 270, in get_field
+    obj = self.get_value(first, args, kwargs)
+  File "/usr/lib/python3.10/string.py", line 227, in get_value
+    return kwargs[key]
+KeyError: 'prefix'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/snakemake/__init__.py", line 593, in snakemake
+    workflow.include(
+  File "/usr/lib/python3/dist-packages/snakemake/workflow.py", line 1188, in include
+    exec(compile(code, snakefile.get_path_or_uri(), "exec"), self.globals)
+  File "/root/test/Snakefile", line 4, in <module>
+    input: "{prefix}.pdb"
+  File "/usr/lib/python3/dist-packages/snakemake/io.py", line 1182, in expand
+    raise WildcardError("No values given for wildcard {}.".format(e))
+snakemake.exceptions.WildcardError: No values given for wildcard 'prefix'.
+
+WildcardError in line 3 of /root/test/Snakefile:
+No values given for wildcard 'prefix'.
+  File "/root/test/Snakefile", line 3, in <module>

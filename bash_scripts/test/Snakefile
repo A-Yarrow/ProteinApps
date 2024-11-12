@@ -1,8 +1,33 @@
+# Rule all specifies the final output files without wildcards
+rule all:
+    input:
+        expand("binders/{prefix}-binders_{number}.pdb", prefix="3gbn", number=[0, 1]),  # Specify concrete files for target output
+        "{prefix}_silent.silent",
+        "{prefix}_mpnn.silent",
+        "{prefix}_af2.silent",
+        "{prefix}_{name}_af2pred.pdb"
+
+# Rule to run RFdiffusion and produce multiple .pdb files
+rule run_rfdiffusion:
+    output: expand("binders/{prefix}-binders_{number}.pdb", prefix="{prefix}", number=[0, 1])  # Adjust numbers as needed
+    input: "{prefix}.pdb"
+    shell:
+        """
+	source $HOME/.bashrc
+        bash design_protein_binders.sh
+        """
+
+# Rule to take all .pdb files from binders directory as input
 rule run_silent:
     output: "{prefix}_silent.silent"
-    input: "{prefix}_pdb"
-    shell: "silentfrompdbs {input}/*.pdb > {output}"
+    input: expand("binders/{prefix}-binders_{number}.pdb", prefix="{prefix}", number=[0, 1])  # Use the same range as above
+    shell:
+        """
+        source $HOME/.bashrc
+        silentfrompdbs {input} > {output}
+        """
 
+# Remaining rules follow as defined
 rule run_mpnn:
     output: "{prefix}_mpnn.silent"
     input: "{prefix}_silent.silent"
@@ -12,17 +37,17 @@ rule run_mpnn:
         conda activate proteinmpnn_binder_design
         dl_interface_design.py -silent {input} -outsilent {output}
         """
+
 rule run_af2:
     output: "{prefix}_af2.silent"
     input: "{prefix}_mpnn.silent"
     shell:
         """
         conda activate af2_binder_design
-        shell("predict.py -silent {input} -outsilent {output}
+        predict.py -silent {input} -outsilent {output}
         """
 
 rule convert2pdb:
-    output: "prefix_{name}_af2pred.pdb"
+    output: "{prefix}_{name}_af2pred.pdb"
     input: "{prefix}_af2.silent"
-    output: "prefix_af2.pdb"
     shell: "silentextract {input} > {output}"

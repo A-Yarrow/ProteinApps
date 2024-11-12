@@ -1,0 +1,16 @@
+Building DAG of jobs...
+Full Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/snakemake/__init__.py", line 701, in snakemake
+    success = workflow.execute(
+  File "/usr/lib/python3/dist-packages/snakemake/workflow.py", line 767, in execute
+    dag.init()
+  File "/usr/lib/python3/dist-packages/snakemake/dag.py", line 178, in init
+    for job in map(self.rule2job, self.targetrules):
+  File "/usr/lib/python3/dist-packages/snakemake/dag.py", line 1684, in rule2job
+    raise WorkflowError(
+snakemake.exceptions.WorkflowError: Target rules may not contain wildcards. Please specify concrete files or a rule without wildcards at the command line, or have a rule without wildcards at the very top of your workflow (e.g. the typical "rule all" which just collects all results you want to generate in the end).
+
+WorkflowError:
+Target rules may not contain wildcards. Please specify concrete files or a rule without wildcards at the command line, or have a rule without wildcards at the very top of your workflow (e.g. the typical "rule all" which just collects all results you want to generate in the end).
+unlocking
+removed all locks

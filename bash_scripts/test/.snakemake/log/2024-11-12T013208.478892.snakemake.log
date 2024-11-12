@@ -1,0 +1,110 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job                count    min threads    max threads
+---------------  -------  -------------  -------------
+convert2pdb            1              1              1
+run_af2                1              1              1
+run_mpnn               1              1              1
+run_rfdiffusion        1              1              1
+run_silent             1              1              1
+total                  5              1              1
+
+Resources before job selection: {'_cores': 1, '_nodes': 9223372036854775807}
+Ready jobs (1):
+	run_rfdiffusion
+Select jobs to execute...
+Using greedy selector because only single job has to be scheduled.
+Selected jobs (1):
+	run_rfdiffusion
+Resources after job selection: {'_cores': 0, '_nodes': 9223372036854775806}
+
+[Tue Nov 12 01:32:08 2024]
+rule run_rfdiffusion:
+    input: 3gbn.pdb
+    output: binders/3gbn-binders_0.pdb, binders/3gbn-binders_1.pdb
+    jobid: 4
+    wildcards: prefix=3gbn
+    resources: tmpdir=/tmp
+
+
+        bash design_protein_binders.sh
+        
+[Tue Nov 12 02:01:52 2024]
+Finished job 4.
+1 of 5 steps (20%) done
+Resources before job selection: {'_cores': 1, '_nodes': 9223372036854775807}
+Ready jobs (1):
+	run_silent
+Select jobs to execute...
+Using greedy selector because only single job has to be scheduled.
+Selected jobs (1):
+	run_silent
+Resources after job selection: {'_cores': 0, '_nodes': 9223372036854775806}
+
+[Tue Nov 12 02:01:52 2024]
+rule run_silent:
+    input: binders/3gbn-binders_0.pdb, binders/3gbn-binders_1.pdb
+    output: 3gbn_silent.silent
+    jobid: 3
+    wildcards: prefix=3gbn
+    resources: tmpdir=/tmp
+
+silentfrompdbs binders/3gbn-binders_0.pdb binders/3gbn-binders_1.pdb > 3gbn_silent.silent
+Full Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/snakemake/executors/__init__.py", line 2424, in run_wrapper
+    run(
+  File "/root/test/Snakefile", line 36, in __rule_run_silent
+    rule convert2pdb:
+  File "/usr/lib/python3/dist-packages/snakemake/shell.py", line 287, in __new__
+    raise sp.CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'set -euo pipefail;  silentfrompdbs binders/3gbn-binders_0.pdb binders/3gbn-binders_1.pdb > 3gbn_silent.silent' returned non-zero exit status 127.
+
+[Tue Nov 12 02:01:52 2024]
+Error in rule run_silent:
+    jobid: 3
+    output: 3gbn_silent.silent
+    shell:
+        silentfrompdbs binders/3gbn-binders_0.pdb binders/3gbn-binders_1.pdb > 3gbn_silent.silent
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Full Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/snakemake/executors/__init__.py", line 2424, in run_wrapper
+    run(
+  File "/root/test/Snakefile", line 36, in __rule_run_silent
+    rule convert2pdb:
+  File "/usr/lib/python3/dist-packages/snakemake/shell.py", line 287, in __new__
+    raise sp.CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'set -euo pipefail;  silentfrompdbs binders/3gbn-binders_0.pdb binders/3gbn-binders_1.pdb > 3gbn_silent.silent' returned non-zero exit status 127.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/snakemake/executors/__init__.py", line 599, in _callback
+    raise ex
+  File "/usr/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/usr/lib/python3/dist-packages/snakemake/executors/__init__.py", line 585, in cached_or_run
+    run_func(*args)
+  File "/usr/lib/python3/dist-packages/snakemake/executors/__init__.py", line 2460, in run_wrapper
+    raise RuleException(
+snakemake.exceptions.RuleException: CalledProcessError in line 14 of /root/test/Snakefile:
+Command 'set -euo pipefail;  silentfrompdbs binders/3gbn-binders_0.pdb binders/3gbn-binders_1.pdb > 3gbn_silent.silent' returned non-zero exit status 127.
+  File "/root/test/Snakefile", line 14, in __rule_run_silent
+
+RuleException:
+CalledProcessError in line 14 of /root/test/Snakefile:
+Command 'set -euo pipefail;  silentfrompdbs binders/3gbn-binders_0.pdb binders/3gbn-binders_1.pdb > 3gbn_silent.silent' returned non-zero exit status 127.
+  File "/root/test/Snakefile", line 14, in __rule_run_silent
+  File "/usr/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+Removing output files of failed job run_silent since they might be corrupted:
+3gbn_silent.silent
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /root/test/.snakemake/log/2024-11-12T013208.478892.snakemake.log
+unlocking
+removing lock
+removing lock
+removed all locks

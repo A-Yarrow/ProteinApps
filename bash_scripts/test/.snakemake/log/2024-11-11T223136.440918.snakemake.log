@@ -1,0 +1,5 @@
+The flag 'directory' used in rule run_silent is only valid for outputs, not inputs.
+Building DAG of jobs...
+MissingInputException in line 9 of /root/test/Snakefile:
+Missing input files for rule run_silent:
+3gbn-binders

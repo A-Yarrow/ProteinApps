@@ -1,0 +1,60 @@
+Full Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/snakemake/parser.py", line 767, in block_content
+    for t in self.subautomaton(
+  File "/usr/lib/python3/dist-packages/snakemake/parser.py", line 106, in consume
+    for t, orig in self.state(token):
+  File "/usr/lib/python3/dist-packages/snakemake/parser.py", line 171, in block
+    raise StopAutomaton(token)
+snakemake.parser.StopAutomaton: TokenInfo(type=1 (NAME), string='input', start=(14, 4), end=(14, 9), line='    input: expand("binders/{prefix}-binders_{number}.pdb", prefix="{prefix}", number=[0, 1])  # Use the same range as above\n')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/snakemake/parser.py", line 767, in block_content
+    for t in self.subautomaton(
+  File "/usr/lib/python3/dist-packages/snakemake/parser.py", line 106, in consume
+    for t, orig in self.state(token):
+  File "/usr/lib/python3/dist-packages/snakemake/parser.py", line 171, in block
+    raise StopAutomaton(token)
+snakemake.parser.StopAutomaton: TokenInfo(type=1 (NAME), string='shell', start=(15, 4), end=(15, 9), line='    shell:\n')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/snakemake/__init__.py", line 593, in snakemake
+    workflow.include(
+  File "/usr/lib/python3/dist-packages/snakemake/workflow.py", line 1170, in include
+    code, linemap, rulecount = parse(
+  File "/usr/lib/python3/dist-packages/snakemake/parser.py", line 1208, in parse
+    for t, orig_token in automaton.consume():
+  File "/usr/lib/python3/dist-packages/snakemake/parser.py", line 106, in consume
+    for t, orig in self.state(token):
+  File "/usr/lib/python3/dist-packages/snakemake/parser.py", line 1160, in python
+    for t in self.subautomaton(token.string).consume():
+  File "/usr/lib/python3/dist-packages/snakemake/parser.py", line 106, in consume
+    for t, orig in self.state(token):
+  File "/usr/lib/python3/dist-packages/snakemake/parser.py", line 180, in block
+    yield from self.block_content(token)
+  File "/usr/lib/python3/dist-packages/snakemake/parser.py", line 778, in block_content
+    for t in self.block(e.token):
+  File "/usr/lib/python3/dist-packages/snakemake/parser.py", line 180, in block
+    yield from self.block_content(token)
+  File "/usr/lib/python3/dist-packages/snakemake/parser.py", line 778, in block_content
+    for t in self.block(e.token):
+  File "/usr/lib/python3/dist-packages/snakemake/parser.py", line 180, in block
+    yield from self.block_content(token)
+  File "/usr/lib/python3/dist-packages/snakemake/parser.py", line 767, in block_content
+    for t in self.subautomaton(
+  File "/usr/lib/python3/dist-packages/snakemake/parser.py", line 106, in consume
+    for t, orig in self.state(token):
+  File "/usr/lib/python3/dist-packages/snakemake/parser.py", line 169, in block
+    yield from self.decorate_end(token)
+  File "/usr/lib/python3/dist-packages/snakemake/parser.py", line 584, in decorate_end
+    self.error(
+  File "/usr/lib/python3/dist-packages/snakemake/parser.py", line 117, in error
+    raise SyntaxError(msg, (self.snakefile.path, lineno(token), None, None))
+  File "/root/test/Snakefile", line 16
+SyntaxError: Command must be given as string after the shell keyword.
+
+SyntaxError in line 16 of /root/test/Snakefile:
+Command must be given as string after the shell keyword. (Snakefile, line 16)

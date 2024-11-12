@@ -1,0 +1,99 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job                count    min threads    max threads
+---------------  -------  -------------  -------------
+convert2pdb            1              1              1
+run_af2                1              1              1
+run_mpnn               1              1              1
+run_rfdiffusion        1              1              1
+run_silent             1              1              1
+total                  5              1              1
+
+Resources before job selection: {'_cores': 1, '_nodes': 9223372036854775807}
+Ready jobs (1):
+	run_rfdiffusion
+Select jobs to execute...
+Using greedy selector because only single job has to be scheduled.
+Selected jobs (1):
+	run_rfdiffusion
+Resources after job selection: {'_cores': 0, '_nodes': 9223372036854775806}
+
+[Mon Nov 11 23:28:40 2024]
+rule run_rfdiffusion:
+    input: 3gbn.pdb
+    output: binders/3gbn-binders_1.pdb, binders/3gbn-binders_2.pdb
+    jobid: 4
+    wildcards: prefix=3gbn
+    resources: tmpdir=/tmp
+
+
+        source .bashrc
+        ./$HOME/design_protein_binders.sh
+        
+Full Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/snakemake/executors/__init__.py", line 2424, in run_wrapper
+    run(
+  File "/root/test/Snakefile", line 20, in __rule_run_rfdiffusion
+    input: "{prefix}_silent.silent"
+  File "/usr/lib/python3/dist-packages/snakemake/shell.py", line 287, in __new__
+    raise sp.CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'set -euo pipefail;  
+        source .bashrc
+        ./$HOME/design_protein_binders.sh' returned non-zero exit status 1.
+
+[Mon Nov 11 23:28:40 2024]
+Error in rule run_rfdiffusion:
+    jobid: 4
+    output: binders/3gbn-binders_1.pdb, binders/3gbn-binders_2.pdb
+    shell:
+        
+        source .bashrc
+        ./$HOME/design_protein_binders.sh
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Full Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/snakemake/executors/__init__.py", line 2424, in run_wrapper
+    run(
+  File "/root/test/Snakefile", line 20, in __rule_run_rfdiffusion
+    input: "{prefix}_silent.silent"
+  File "/usr/lib/python3/dist-packages/snakemake/shell.py", line 287, in __new__
+    raise sp.CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'set -euo pipefail;  
+        source .bashrc
+        ./$HOME/design_protein_binders.sh' returned non-zero exit status 1.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/snakemake/executors/__init__.py", line 599, in _callback
+    raise ex
+  File "/usr/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/usr/lib/python3/dist-packages/snakemake/executors/__init__.py", line 585, in cached_or_run
+    run_func(*args)
+  File "/usr/lib/python3/dist-packages/snakemake/executors/__init__.py", line 2460, in run_wrapper
+    raise RuleException(
+snakemake.exceptions.RuleException: CalledProcessError in line 6 of /root/test/Snakefile:
+Command 'set -euo pipefail;  
+        source .bashrc
+        ./$HOME/design_protein_binders.sh' returned non-zero exit status 1.
+  File "/root/test/Snakefile", line 6, in __rule_run_rfdiffusion
+
+RuleException:
+CalledProcessError in line 6 of /root/test/Snakefile:
+Command 'set -euo pipefail;  
+        source .bashrc
+        ./$HOME/design_protein_binders.sh' returned non-zero exit status 1.
+  File "/root/test/Snakefile", line 6, in __rule_run_rfdiffusion
+  File "/usr/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /root/test/.snakemake/log/2024-11-11T232840.047494.snakemake.log
+unlocking
+removing lock
+removing lock
+removed all locks

@@ -1,0 +1,75 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job                count    min threads    max threads
+---------------  -------  -------------  -------------
+convert2pdb            1              1              1
+run_af2                1              1              1
+run_mpnn               1              1              1
+run_rfdiffusion        1              1              1
+run_silent             1              1              1
+total                  5              1              1
+
+Resources before job selection: {'_cores': 1, '_nodes': 9223372036854775807}
+Ready jobs (1):
+	run_rfdiffusion
+Select jobs to execute...
+Using greedy selector because only single job has to be scheduled.
+Selected jobs (1):
+	run_rfdiffusion
+Resources after job selection: {'_cores': 0, '_nodes': 9223372036854775806}
+
+[Mon Nov 11 23:37:02 2024]
+rule run_rfdiffusion:
+    input: 3gbn.pdb
+    output: binders/3gbn-binders_1.pdb, binders/3gbn-binders_2.pdb
+    jobid: 4
+    wildcards: prefix=3gbn
+    resources: tmpdir=/tmp
+
+
+        bash design_protein_binders.sh
+        
+Waiting at most 5 seconds for missing files.
+Full Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/snakemake/dag.py", line 493, in check_and_touch_output
+    wait_for_files(
+  File "/usr/lib/python3/dist-packages/snakemake/io.py", line 824, in wait_for_files
+    raise IOError(
+OSError: Missing files after 5 seconds:
+binders/3gbn-binders_2.pdb
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/snakemake/scheduler.py", line 529, in _finish_jobs
+    self.get_executor(job).handle_job_success(job)
+  File "/usr/lib/python3/dist-packages/snakemake/executors/__init__.py", line 614, in handle_job_success
+    super().handle_job_success(job)
+  File "/usr/lib/python3/dist-packages/snakemake/executors/__init__.py", line 265, in handle_job_success
+    job.postprocess(
+  File "/usr/lib/python3/dist-packages/snakemake/jobs.py", line 1017, in postprocess
+    self.dag.check_and_touch_output(
+  File "/usr/lib/python3/dist-packages/snakemake/dag.py", line 500, in check_and_touch_output
+    raise MissingOutputException(
+snakemake.exceptions.MissingOutputException: Job Missing files after 5 seconds:
+binders/3gbn-binders_2.pdb
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Job id: 4 completed successfully, but some output files are missing. 4
+
+MissingOutputException in line 2 of /root/test/Snakefile:
+Job Missing files after 5 seconds:
+binders/3gbn-binders_2.pdb
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Job id: 4 completed successfully, but some output files are missing. 4
+Removing output files of failed job run_rfdiffusion since they might be corrupted:
+binders/3gbn-binders_1.pdb
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /root/test/.snakemake/log/2024-11-11T233702.064947.snakemake.log
+unlocking
+removing lock
+removing lock
+removed all locks

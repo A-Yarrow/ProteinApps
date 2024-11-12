@@ -132,6 +132,7 @@ cd $HOME/dl_binder_design
 
 #Edit YAML file to install biopython=1.81 https://github.com/nrbennet/dl_binder_design/issues/72
 sed -i 's/biopython$/biopython=1.81'/ $HOME/dl_binder_design/include/af2_binder_design.yml
+sed -i 's/ml_dtypes$/ml_dtypes=0.3.1'/ $HOME/dl_binder_design/include/af2_binder_design.yml
 
 #Create the AF2 conda environment
 conda env create -f $HOME/dl_binder_design/include/af2_binder_design.yml
@@ -159,7 +160,7 @@ fi
 
 #Allow tensorflow to work more efficiently by using AutoGraph to convert python functions to Tensor Graphs
 pip install flax
-#Install Snakemake
-pip install snakemake
-#Test Silent Tools
-#silentfrompdbs pdb_test/*.pdb > test.silent
+
+#Install Snakemake system wide
+conda activate base
+apt install snakemake

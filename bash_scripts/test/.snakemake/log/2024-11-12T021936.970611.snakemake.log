@@ -1,0 +1,57 @@
+Building DAG of jobs...
+Full Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/snakemake/jobs.py", line 107, in new
+    obj = self.cache[key]
+KeyError: ('all',)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/snakemake/io.py", line 910, in format_match
+    value = wildcards[name]
+KeyError: 'prefix'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/snakemake/rules.py", line 842, in expand_input
+    self._apply_wildcards(
+  File "/usr/lib/python3/dist-packages/snakemake/rules.py", line 806, in _apply_wildcards
+    concrete = concretize(item_, wildcards, _is_callable)
+  File "/usr/lib/python3/dist-packages/snakemake/rules.py", line 828, in concretize_iofile
+    return f.apply_wildcards(
+  File "/usr/lib/python3/dist-packages/snakemake/io.py", line 691, in apply_wildcards
+    apply_wildcards(
+  File "/usr/lib/python3/dist-packages/snakemake/io.py", line 922, in apply_wildcards
+    return _wildcard_regex.sub(format_match, pattern)
+  File "/usr/lib/python3/dist-packages/snakemake/io.py", line 920, in format_match
+    raise WildcardError(str(ex))
+snakemake.exceptions.WildcardError: 'prefix'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/snakemake/__init__.py", line 701, in snakemake
+    success = workflow.execute(
+  File "/usr/lib/python3/dist-packages/snakemake/workflow.py", line 767, in execute
+    dag.init()
+  File "/usr/lib/python3/dist-packages/snakemake/dag.py", line 178, in init
+    for job in map(self.rule2job, self.targetrules):
+  File "/usr/lib/python3/dist-packages/snakemake/dag.py", line 1690, in rule2job
+    return self.new_job(targetrule)
+  File "/usr/lib/python3/dist-packages/snakemake/dag.py", line 1435, in new_job
+    job = self.job_factory.new(
+  File "/usr/lib/python3/dist-packages/snakemake/jobs.py", line 109, in new
+    obj = Job(rule, dag, wildcards_dict, format_wildcards, targetfile)
+  File "/usr/lib/python3/dist-packages/snakemake/jobs.py", line 168, in __init__
+    self.input, input_mapping, self.dependencies = self.rule.expand_input(
+  File "/usr/lib/python3/dist-packages/snakemake/rules.py", line 852, in expand_input
+    raise WildcardError(
+snakemake.exceptions.WildcardError: Wildcards in input files cannot be determined from output files:
+'prefix'
+
+WildcardError in line 2 of /root/test/Snakefile:
+Wildcards in input files cannot be determined from output files:
+'prefix'
+unlocking
+removed all locks
