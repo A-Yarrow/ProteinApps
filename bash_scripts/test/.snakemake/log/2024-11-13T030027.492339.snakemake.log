@@ -1,0 +1,38 @@
+The flag 'directory' used in rule run_silent is only valid for outputs, not inputs.
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job            count    min threads    max threads
+-----------  -------  -------------  -------------
+convert2pdb        1              1              1
+run_af2            1              1              1
+run_mpnn           1              1              1
+run_silent         1              1              1
+total              4              1              1
+
+Resources before job selection: {'_cores': 1, '_nodes': 9223372036854775807}
+Ready jobs (1):
+	run_silent
+Select jobs to execute...
+Using greedy selector because only single job has to be scheduled.
+Selected jobs (1):
+	run_silent
+Resources after job selection: {'_cores': 0, '_nodes': 9223372036854775806}
+
+[Wed Nov 13 03:00:27 2024]
+rule run_silent:
+    input: binders
+    output: 3gbn_silent.silent
+    jobid: 3
+    wildcards: prefiix=3gbn
+    resources: tmpdir=/tmp
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /root/test/.snakemake/log/2024-11-13T030027.492339.snakemake.log
+unlocking
+removing lock
+removing lock
+removed all locks

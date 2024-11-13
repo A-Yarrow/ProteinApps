@@ -1,0 +1,61 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job                count    min threads    max threads
+---------------  -------  -------------  -------------
+run_af2                1              1              1
+run_mpnn               1              1              1
+run_rfdiffusion        1              1              1
+run_silent             1              1              1
+total                  4              1              1
+
+Resources before job selection: {'_cores': 1, '_nodes': 9223372036854775807}
+Ready jobs (1):
+	run_rfdiffusion
+Select jobs to execute...
+Using greedy selector because only single job has to be scheduled.
+Selected jobs (1):
+	run_rfdiffusion
+Resources after job selection: {'_cores': 0, '_nodes': 9223372036854775806}
+
+[Wed Nov 13 03:40:26 2024]
+rule run_rfdiffusion:
+    input: 3gbn.pdb
+    output: binders/3gbn-binders_0.pdb, binders/3gbn-binders_1.pdb
+    jobid: 3
+    wildcards: prefix=3gbn
+    resources: tmpdir=/tmp
+
+
+	#source $HOME/.bashrc
+        bash test_design_protein_binders.sh
+        
+[Wed Nov 13 04:09:39 2024]
+Finished job 3.
+1 of 4 steps (25%) done
+Resources before job selection: {'_cores': 1, '_nodes': 9223372036854775807}
+Ready jobs (1):
+	run_silent
+Select jobs to execute...
+Using greedy selector because only single job has to be scheduled.
+Selected jobs (1):
+	run_silent
+Resources after job selection: {'_cores': 0, '_nodes': 9223372036854775806}
+
+[Wed Nov 13 04:09:39 2024]
+rule run_silent:
+    input: binders/3gbn-binders_0.pdb, binders/3gbn-binders_1.pdb
+    output: 3gbn_silent.silent
+    jobid: 2
+    wildcards: prefix=3gbn
+    resources: tmpdir=/tmp
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /root/test/.snakemake/log/2024-11-13T034025.838993.snakemake.log
+unlocking
+removing lock
+removing lock
+removed all locks

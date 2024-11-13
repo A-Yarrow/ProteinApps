@@ -1,0 +1,65 @@
+The flag 'directory' used in rule run_silent is only valid for outputs, not inputs.
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job            count    min threads    max threads
+-----------  -------  -------------  -------------
+convert2pdb        1              1              1
+run_af2            1              1              1
+run_mpnn           1              1              1
+run_silent         1              1              1
+total              4              1              1
+
+Resources before job selection: {'_cores': 1, '_nodes': 9223372036854775807}
+Ready jobs (1):
+	run_silent
+Select jobs to execute...
+Using greedy selector because only single job has to be scheduled.
+Selected jobs (1):
+	run_silent
+Resources after job selection: {'_cores': 0, '_nodes': 9223372036854775806}
+
+[Wed Nov 13 03:11:41 2024]
+rule run_silent:
+    input: binders
+    output: 3gbn_silent.silent
+    jobid: 3
+    wildcards: prefix=3gbn
+    resources: tmpdir=/tmp
+
+Terminating processes on user request, this might take some time.
+Full Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/snakemake/scheduler.py", line 436, in schedule
+    self._open_jobs.acquire()
+  File "/usr/lib/python3.10/threading.py", line 467, in acquire
+    self._cond.wait(timeout)
+  File "/usr/lib/python3.10/threading.py", line 320, in wait
+    waiter.acquire()
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/snakemake/__init__.py", line 701, in snakemake
+    success = workflow.execute(
+  File "/usr/lib/python3/dist-packages/snakemake/workflow.py", line 1075, in execute
+    success = self.scheduler.schedule()
+  File "/usr/lib/python3/dist-packages/snakemake/scheduler.py", line 521, in schedule
+    self._executor.cancel()
+  File "/usr/lib/python3/dist-packages/snakemake/executors/__init__.py", line 593, in cancel
+    self.pool.shutdown()
+  File "/usr/lib/python3.10/concurrent/futures/thread.py", line 235, in shutdown
+    t.join()
+  File "/usr/lib/python3.10/threading.py", line 1096, in join
+    self._wait_for_tstate_lock()
+  File "/usr/lib/python3.10/threading.py", line 1116, in _wait_for_tstate_lock
+    if lock.acquire(block, timeout):
+KeyboardInterrupt
+
+Cancelling snakemake on user request.
+unlocking
+removing lock
+removing lock
+removed all locks

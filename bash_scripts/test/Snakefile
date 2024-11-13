@@ -1,31 +1,32 @@
-# Rule all specifies the final output files without wildcards
-rule all:
-    input:
-        expand("binders/{prefix}-binders_{number}.pdb", prefix="3gbn", number=[0, 1]),  # Specify concrete files for target output
-        "{prefix}_silent.silent",
-        "{prefix}_mpnn.silent",
-        "{prefix}_af2.silent",
-        "{prefix}_{name}_af2pred.pdb"
-
 # Rule to run RFdiffusion and produce multiple .pdb files
 rule run_rfdiffusion:
     output: expand("binders/{prefix}-binders_{number}.pdb", prefix="{prefix}", number=[0, 1])  # Adjust numbers as needed
     input: "{prefix}.pdb"
     shell:
         """
-	source $HOME/.bashrc
-        bash design_protein_binders.sh
+	#source $HOME/.bashrc
+        bash test_design_protein_binders.sh
         """
 
-# Rule to take all .pdb files from binders directory as input
+# Rule look in binders directory. Shell will only be invoked if last pdb is there
 rule run_silent:
     output: "{prefix}_silent.silent"
-    input: expand("binders/{prefix}-binders_{number}.pdb", prefix="{prefix}", number=[0, 1])  # Use the same range as above
-    shell:
-        """
-        source $HOME/.bashrc
-        silentfrompdbs {input} > {output}
-        """
+    input: 
+        pdb_files=expand("binders/{prefix}-binders_{number}.pdb", prefix="{prefix}", number=[0, 1])
+    params: 
+        prefix=lambda wildcards: wildcards.prefix
+           
+    run:
+        import time
+        from pathlib import Path
+        
+        last_file = Path(f"binders/{params.prefix}-binders_1.pdb")
+        while not last_file.is_file():
+            print("Waiting for RFdiffusion to finish...")
+            time.sleep(60)  # Waits 10 seconds before checking again
+
+        # Once the file is found, run the shell command
+        shell("silentfrompdbs binders/*.pdb > {output}")
 
 # Remaining rules follow as defined
 rule run_mpnn:

@@ -1,0 +1,12 @@
+Full Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/snakemake/__init__.py", line 593, in snakemake
+    workflow.include(
+  File "/usr/lib/python3/dist-packages/snakemake/workflow.py", line 1188, in include
+    exec(compile(code, snakefile.get_path_or_uri(), "exec"), self.globals)
+  File "/root/test/Snakefile", line 34
+    """
+       ^
+SyntaxError: invalid syntax. Perhaps you forgot a comma?
+
+SyntaxError in line 15 of /root/test/Snakefile:
+invalid syntax. Perhaps you forgot a comma?

@@ -24,6 +24,7 @@ docker run -it --rm --gpus all \
   -v $HOME/models:$HOME/models \
   -v $TARGET_PDB_PATH:$TARGET_PDB_PATH \
   -v $OUTPUT_PDB_PATH:$OUTPUT_PDB_PATH \
+  -v $OUTPUT_PREFIX:$OUTPUT_PREFIX \
   rfdiffusion \
   inference.output_prefix=${OUTPUT_PREFIX} \
   inference.model_directory_path=/root/models \
